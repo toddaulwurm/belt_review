@@ -50,6 +50,9 @@ class User:
         if not EMAIL_REGEX.match(form_data['email']): 
             flash("invalid email address")
             is_valid = False
+        if User.get_by_email(form_data):
+            flash("Email taken. Choose another.")
+            is_valid = False
         return is_valid
         
 

@@ -15,12 +15,16 @@ def login():
 
 @app.route("/dashboard")
 def dashboard():
+    if 'user_id' not in session:
+        flash("Please Login")
+        return redirect("/")
     data = {
         "user_id" : session['user_id']
     }
 
     user = User.get_user_info(data)
     recipes = Recipe.get_all_recipes()
+
     return render_template("dashboard.html", user = user, recipes = recipes)
 
 
@@ -40,6 +44,7 @@ def register():
     }
     user_id = User.register_user(data)
     session['user_id'] = user_id
+
     return redirect("/dashboard")
 
 
@@ -60,6 +65,7 @@ def login_user():
         return redirect("/")
 
     session['user_id'] = user_in_db.id
+    
     return redirect("/dashboard")
 
 

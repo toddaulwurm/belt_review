@@ -5,6 +5,9 @@ from flask_app.models.recipe import Recipe
 
 @app.route("/recipes/new")
 def new_recipe():
+    if 'user_id' not in session:
+        flash("Please Login")
+        return redirect("/")
     user_id = session["user_id"]
     return render_template("new_recipe.html", user_id = user_id)
 
@@ -27,15 +30,22 @@ def validate_recipe():
 
 @app.route("/recipes/<int:recipe_id>")
 def show_recipe(recipe_id):
+    if 'user_id' not in session:
+        flash("Please Login")
+        return redirect("/")
     data = {
         "recipe_id" : recipe_id
     }
     recipe = Recipe.get_one_recipe(data)
-    return render_template("show_recipe.html", recipe=recipe)
+    logged_in_id = session["user_id"]
+    return render_template("show_recipe.html", recipe=recipe, logged_in_id = logged_in_id)
 
 
 @app.route("/recipes/edit/<int:recipe_id>")
 def edit_recipe(recipe_id):
+    if 'user_id' not in session:
+        flash("Please Login")
+        return redirect("/")
     data = {
         "recipe_id" : recipe_id
     }

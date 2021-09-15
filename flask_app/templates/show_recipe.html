@@ -18,9 +18,14 @@
     <h6>{{recipe.thirty_min}}</h6>
     <h3>Made At</h3>
     <h6>{{recipe.made_at}}</h6>
+    <h3>By</h3>
+    <h6>{{recipe.user.first_name}} {{recipe.user.last_name}}</h6>
 
+
+    {% if logged_in_id == recipe.user.id %}
     <a class="mt-3 btn btn-warning" href="/recipes/edit/{{recipe.id}}">Edit</a>
     <a class="mt-3 btn btn-danger" href="/delete/{{recipe.id}}">Delete</a>
+    {% endif %}
     <br>
     <hr><hr>
     <a class="mt-3 btn btn-primary" href="/dashboard">DASHBOARD</a>
